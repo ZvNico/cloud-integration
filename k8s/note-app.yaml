@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: note-app-config
 data:
+  AUTH_SERVICE_URL: "auth-service:80"
   PORT: "3000"
   DB_NAME: "note-db"
 
@@ -97,9 +98,25 @@ spec:
       containers:
         - name: note-app
           image: ghcr.io/zvnico/cloud-integration/note-app:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 3000
-
+          env:
+            - name: PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: note-app-config
+                  key: PORT
+            - name: DATABASE_URL
+              valueFrom:
+                secretKeyRef:
+                  name: note-app-secret
+                  key: DB_CONNECTION_STRING
+            - name: AUTH_SERVICE_URL
+              valueFrom:
+                configMapKeyRef:
+                  name: note-app-config
+                  key: AUTH_SERVICE_URL
 ---
 apiVersion: v1
 kind: Service

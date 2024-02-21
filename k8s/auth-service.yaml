@@ -97,6 +97,7 @@ spec:
       containers:
         - name: auth-service
           image: ghcr.io/zvnico/cloud-integration/auth-service:latest
+          imagePullPolicy: Always
           ports:
             - containerPort: 50051
           env:

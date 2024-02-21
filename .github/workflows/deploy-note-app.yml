@@ -19,4 +19,4 @@ jobs:
 
       - name: Apply Kubernetes scripts
         run: |
-          kubectl apply -f note-app.yaml
+          kubectl apply -f k8s/note-app.yaml

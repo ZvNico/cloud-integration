@@ -17,8 +17,9 @@ COPY . .
 # Build the project
 RUN yarn build
 
+
 # Expose the listening port
 EXPOSE 3000
 
 # Run the app
-CMD ["sh", "-c", "yarn prisma migrate deploy && yarn start"]
+CMD ["sh", "-c", "yarn prisma migrate deploy && yarn prisma generate && yarn start"]
