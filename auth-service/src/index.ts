@@ -12,7 +12,6 @@ server.addService(AuthService, {
     register: authServer.register,
     verifyToken: authServer.verifyToken,
 });
-
 server.bindAsync(`0.0.0.0:${process.env.PORT}`, ServerCredentials.createInsecure(), () => {
     console.log('Server started');
 });
