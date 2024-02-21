@@ -21,4 +21,4 @@ RUN yarn build
 EXPOSE 3000
 
 # Run the app
-CMD "yarn prisma migrate deploy && yarn start"
+CMD ["sh", "-c", "yarn prisma migrate deploy && yarn start"]

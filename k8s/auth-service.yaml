@@ -96,7 +96,7 @@ spec:
     spec:
       containers:
         - name: auth-service
-          image: cloud-integration/auth-service:latest
+          image: ghcr.io/zvnico/cloud-integration/auth-service:latest
           ports:
             - containerPort: 50051
           env:

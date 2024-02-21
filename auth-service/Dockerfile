@@ -12,4 +12,4 @@ RUN yarn build
 
 EXPOSE 50051
 
-CMD "yarn prisma migrate deploy && yarn start"
+CMD ["sh", "-c", "yarn prisma migrate deploy && yarn start"]

@@ -96,7 +96,7 @@ spec:
     spec:
       containers:
         - name: note-app
-          image: zvnico7/note-app
+          image: ghcr.io/zvnico/cloud-integration/note-app:latest
           ports:
             - containerPort: 3000
 
