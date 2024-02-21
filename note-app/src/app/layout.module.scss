@@ -1,0 +1,13 @@
+@import "@/styles/color.module.scss";
+
+.container {
+  display: flex;
+  justify-content: space-between;
+  height: 100vh;
+  background-color: $background;
+  width: 100%;
+}
+
+.main {
+  flex: 1;
+}

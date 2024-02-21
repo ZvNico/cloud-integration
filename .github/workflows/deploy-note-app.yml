@@ -1,0 +1,22 @@
+name: Deploy Note-App
+
+on:
+  workflow_run:
+    workflows: ["Build and Push Note-App Docker Image"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Kubectl
+        uses: azure/setup-kubectl@v1
+
+      - name: Apply Kubernetes scripts
+        run: |
+          kubectl apply -f note-app.yaml

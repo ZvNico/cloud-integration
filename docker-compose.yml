@@ -1,0 +1,55 @@
+version: '3.8'
+services:
+  auth-db:
+    container_name: auth_db
+    image: postgres
+    restart: always
+    env_file:
+      - ./auth-service/.env.local
+    ports:
+      - "5432:5432"
+    volumes:
+      - auth-data:/var/lib/postgresql/data
+  auth-service:
+    container_name: auth_service
+    build:
+      context: ./auth-service
+      dockerfile: Dockerfile
+    command: yarn dev
+    env_file:
+      - ./auth-service/.env.local
+    depends_on:
+      - auth-db
+    volumes:
+      - ./auth-service:/app
+      - /app/node_modules
+  note-db:
+    container_name: note_db
+    image: postgres
+    restart: always
+    ports:
+      - "5433:5432"
+    env_file:
+      - ./note-app/.env.local
+    volumes:
+      - note-data:/var/lib/postgresql/data
+  note-app:
+    container_name: note_app
+    build:
+      context: ./note-app
+      dockerfile: Dockerfile
+    command: yarn dev
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./note-app/.env.local
+    depends_on:
+      - note-db
+    volumes:
+      - ./note-app:/app
+      - /app/node_modules
+      - /app/.next
+
+volumes:
+  auth-data:
+  note-data:

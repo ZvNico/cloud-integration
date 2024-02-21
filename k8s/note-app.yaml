@@ -1,0 +1,132 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: note-app-config
+data:
+  PORT: "3000"
+  DB_NAME: "note-db"
+
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: note-app-secret
+type: Opaque
+stringData:
+  DB_USERNAME: "note-user"
+  DB_PASSWORD: "note-password"
+  DB_CONNECTION_STRING: "postgresql://note-user:note-password@note-db:5432/note-db"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: note-db
+  labels:
+    app: note-db
+spec:
+  ports:
+    - port: 5432
+  selector:
+    app: note-db
+
+---
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: note-db
+spec:
+  serviceName: "note-db"
+  replicas: 1
+  selector:
+    matchLabels:
+      app: note-db
+  template:
+    metadata:
+      labels:
+        app: note-db
+    spec:
+      containers:
+        - name: note-db
+          image: postgres:latest
+          ports:
+            - containerPort: 5432
+          env:
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: note-app-secret
+                  key: DB_USERNAME
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: note-app-secret
+                  key: DB_PASSWORD
+            - name: POSTGRES_DB
+              valueFrom:
+                configMapKeyRef:
+                  name: note-app-config
+                  key: DB_NAME
+          volumeMounts:
+            - name: note-db-storage
+              mountPath: /var/lib/postgresql/data
+  volumeClaimTemplates:
+    - metadata:
+        name: note-db-storage
+      spec:
+        accessModes: [ "ReadWriteOnce" ]
+        resources:
+          requests:
+            storage: 1Gi
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: note-app
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: note-app
+  template:
+    metadata:
+      labels:
+        app: note-app
+    spec:
+      containers:
+        - name: note-app
+          image: zvnico7/note-app
+          ports:
+            - containerPort: 3000
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: note-app
+spec:
+  selector:
+    app: note-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 3000
+
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: note-app-ingress
+spec:
+  rules:
+    - host: localhost
+      http:
+        paths:
+          - pathType: Prefix
+            path: "/"
+            backend:
+              service:
+                name: note-app
+                port:
+                  number: 80

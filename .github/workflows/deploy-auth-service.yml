@@ -1,0 +1,22 @@
+name: Deploy Auth-Service
+
+on:
+  workflow_run:
+    workflows: ["Build and Push Auth-Service Docker Image"]
+    types:
+      - completed
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up Kubectl
+        uses: azure/setup-kubectl@v1
+
+      - name: Apply Kubernetes scripts
+        run: |
+          kubectl apply -f auth-service.yaml

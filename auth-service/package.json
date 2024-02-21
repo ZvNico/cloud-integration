@@ -1,0 +1,31 @@
+{
+  "name": "auth-service",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "dev": "ts-node-dev --respawn src/index.ts",
+    "proto": "sh build-proto.sh",
+    "build": "tsc",
+    "start": "node src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@grpc/grpc-js": "^1.10.1",
+    "@prisma/client": "^5.9.1",
+    "@types/jsonwebtoken": "^9.0.5",
+    "bcrypt": "^5.1.1",
+    "dotenv": "^16.4.5",
+    "grpc-tools": "^1.12.4",
+    "grpc_tools_node_protoc_ts": "^5.3.3",
+    "jsonwebtoken": "^9.0.2",
+    "prisma": "^5.9.1",
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.3.3"
+  },
+  "devDependencies": {
+    "@types/bcrypt": "^5.0.2",
+    "@types/node": "^20.11.19"
+  }
+}

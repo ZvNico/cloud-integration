@@ -1,0 +1,4 @@
+/.idea/
+/**/node_modules/
+/auth-service/src/*.js
+/note-app/.next/

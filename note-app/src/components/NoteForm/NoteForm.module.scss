@@ -1,0 +1,62 @@
+.editPageContainer {
+  display: flex;
+  width: 100%;
+  gap: 64px;
+  padding: 64px;
+}
+
+.container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  gap: 32px;
+  padding-bottom: 64px;
+}
+
+.input {
+  width: 100%;
+  height: 40px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  padding: 8px;
+  font-size: 16px;
+  outline: none;
+}
+
+.contentContainer {
+  display: flex;
+  flex-direction: column;
+  min-width: 100%;
+  min-height: 450px;
+  padding: 16px 8px;
+}
+
+
+.previewContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  min-width: 50%;
+  width: 50%;
+}
+
+
+.buttonText {
+  color: #4f82a6;
+  font-weight: 600;
+}
+
+.notePreview {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  height: 100%;
+  align-items: flex-start;
+}
+
+.notePreviewContent {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}

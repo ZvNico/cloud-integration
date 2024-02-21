@@ -1,0 +1,20 @@
+.button {
+  align-self: flex-end;
+}
+
+.buttonContent {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  gap: 8px;
+}
+
+.vector {
+  width: 16px;
+  height: 16px;
+  fill: {
+    path: {
+      fill: white;
+    }
+  };
+}

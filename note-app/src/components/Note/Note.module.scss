@@ -1,0 +1,44 @@
+@import "@/styles/color.module.scss";
+@import "@/styles/text.module.scss";
+
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 32px;
+  border-radius: 8px;
+  box-shadow: $default-shadow;
+  background-color: $background;
+  margin: 16px 24px 16px 24px;
+}
+
+
+.notesContainer {
+  display: flex;
+  flex-direction: column;
+  padding: 64px 48px;
+  gap: 16px;
+}
+
+.titleSection {
+  display: flex;
+  gap: 32px;
+  align-items: center;
+}
+
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.date {
+  font: $info;
+  color: $date;
+}
+
+.text {
+  font: $text;
+  color: $text;
+}
