@@ -13,7 +13,7 @@ type Props = {
 };
 
 const NoteForm = ({noteId, type}: Props) => {
-    const {getNote, getNotes} = React.useContext(NotesContext);
+    const {getNote} = React.useContext(NotesContext);
     const [titleState, setTitle] = useState('');
     const [contentState, setContent] = useState('');
     const formRef = useRef<HTMLFormElement>(null);
@@ -22,9 +22,10 @@ const NoteForm = ({noteId, type}: Props) => {
 
     useEffect(() => {
         if (type === "edit" && noteId) {
-            const {title, content} = getNote(noteId!);
-            setTitle(title);
-            setContent(content);
+            const note = getNote(noteId);
+            if (!note) return;
+            setTitle(note.title);
+            setContent(note.content);
         }
     }, []);
     // useEffect(() => {
