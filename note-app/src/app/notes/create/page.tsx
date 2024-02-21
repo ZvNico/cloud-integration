@@ -8,5 +8,6 @@ export default async function CreateNotePage({
         readonly noteId: string | string[] | undefined;
     };
 }) {
+
     return <NoteForm noteId={Number(params.noteId)} type="create"/>;
 }
