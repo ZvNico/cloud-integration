@@ -25,9 +25,12 @@ jobs:
         run: |
           gcloud --quiet auth configure-docker
 
-      - name: Set GKE Context
-        run: |
-          gcloud container clusters get-credentials cluster-1 --zone europe-west1 --project ${{ secrets.GCP_PROJECT_ID }}
+      - name: Get GKE credentials
+        uses: google-github-actions/get-gke-credentials@v0.3.0
+        with:
+          cluster_name: cluster-1
+          location: europe-west1
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
 
       - name: Deploy to GKE
         run: |
