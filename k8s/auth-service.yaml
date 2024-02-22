@@ -4,7 +4,7 @@ metadata:
   name: auth-service-config
 data:
   PORT: "50051"
-  DB_NAME: "auth-db-"
+  DB_NAME: "auth-db"
 
 ---
 apiVersion: v1
