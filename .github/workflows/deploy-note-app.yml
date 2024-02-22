@@ -1,8 +1,8 @@
-name: Deploy Note-App
+name: Deploy Note-App to GKE
 
 on:
   workflow_run:
-    workflows: ["Build and Push Note-App Docker Image"]
+    workflows: [ "Build and Push Auth-Service Docker Image" ]
     types:
       - completed
 
@@ -14,9 +14,17 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Kubectl
-        uses: azure/setup-kubectl@v1
+      - name: Setup Google Cloud SDK
+        uses: google-github-actions/setup-gcloud@v0.2.1
+        with:
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          service_account_key: ${{ secrets.GCP_SA_KEY }}
+          export_default_credentials: true
 
-      - name: Apply Kubernetes scripts
+      - name: Configure Docker
+        run: |
+          gcloud --quiet auth configure-docker
+
+      - name: Deploy to GKE
         run: |
           kubectl apply -f k8s/note-app.yaml

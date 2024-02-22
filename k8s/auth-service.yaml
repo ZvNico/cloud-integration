@@ -4,7 +4,7 @@ metadata:
   name: auth-service-config
 data:
   PORT: "50051"
-  DB_NAME: "auth-db"
+  DB_NAME: "auth-db-"
 
 ---
 apiVersion: v1
@@ -15,39 +15,37 @@ type: Opaque
 stringData:
   DB_USERNAME: "auth-user"
   DB_PASSWORD: "auth-password"
-  DB_CONNECTION_STRING: "postgresql://auth-user:auth-password@auth-db:5432/auth-db"
+  DB_CONNECTION_STRING: "postgresql://auth-user:auth-password@auth-db-service:5432/auth-db"
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-db
-  labels:
-    app: auth-db
+  name: auth-db-service
 spec:
   ports:
     - port: 5432
   selector:
-    app: auth-db
+    app: auth-db-pod
 
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: auth-db
+  name: auth-db-statefulset
 spec:
-  serviceName: "auth-db"
+  serviceName: auth-db-service
   replicas: 1
   selector:
     matchLabels:
-      app: auth-db
+      app: auth-db-pod
   template:
     metadata:
       labels:
-        app: auth-db
+        app: auth-db-pod
     spec:
       containers:
-        - name: auth-db
+        - name: auth-db-container
           image: postgres:latest
           ports:
             - containerPort: 5432
@@ -68,11 +66,11 @@ spec:
                   name: auth-service-config
                   key: DB_NAME
           volumeMounts:
-            - name: auth-db-storage
+            - name: auth-db-volume
               mountPath: /var/lib/postgresql/data
   volumeClaimTemplates:
     - metadata:
-        name: auth-db-storage
+        name: auth-db-volume
       spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:
@@ -83,19 +81,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: auth-service
+  name: auth-service-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: auth-service
+      app: auth-service-pod
   template:
     metadata:
       labels:
-        app: auth-service
+        app: auth-service-pod
     spec:
       containers:
-        - name: auth-service
+        - name: auth-service-container
           image: ghcr.io/zvnico/cloud-integration/auth-service:latest
           imagePullPolicy: Always
           ports:
@@ -116,10 +114,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: auth-service
+  name: auth-service-service
 spec:
   selector:
-    app: auth-service
+    app: auth-service-pod
   ports:
     - protocol: TCP
       port: 80

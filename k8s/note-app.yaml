@@ -16,39 +16,37 @@ type: Opaque
 stringData:
   DB_USERNAME: "note-user"
   DB_PASSWORD: "note-password"
-  DB_CONNECTION_STRING: "postgresql://note-user:note-password@note-db:5432/note-db"
+  DB_CONNECTION_STRING: "postgresql://note-user:note-password@note-db-service:5432/note-db"
 
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: note-db
-  labels:
-    app: note-db
+  name: note-db-service
 spec:
   ports:
     - port: 5432
   selector:
-    app: note-db
+    app: note-db-pod
 
 ---
 apiVersion: apps/v1
 kind: StatefulSet
 metadata:
-  name: note-db
+  name: note-db-statefulset
 spec:
-  serviceName: "note-db"
+  serviceName: note-db-service
   replicas: 1
   selector:
     matchLabels:
-      app: note-db
+      app: note-db-pod
   template:
     metadata:
       labels:
-        app: note-db
+        app: note-db-pod
     spec:
       containers:
-        - name: note-db
+        - name: note-db-container
           image: postgres:latest
           ports:
             - containerPort: 5432
@@ -69,11 +67,11 @@ spec:
                   name: note-app-config
                   key: DB_NAME
           volumeMounts:
-            - name: note-db-storage
+            - name: note-db-volume
               mountPath: /var/lib/postgresql/data
   volumeClaimTemplates:
     - metadata:
-        name: note-db-storage
+        name: note-db-volume
       spec:
         accessModes: [ "ReadWriteOnce" ]
         resources:
@@ -84,19 +82,19 @@ spec:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: note-app
+  name: note-app-deployment
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: note-app
+      app: note-app-pod
   template:
     metadata:
       labels:
-        app: note-app
+        app: note-app-pod
     spec:
       containers:
-        - name: note-app
+        - name: note-app-container
           image: ghcr.io/zvnico/cloud-integration/note-app:latest
           imagePullPolicy: Always
           ports:
@@ -121,10 +119,10 @@ spec:
 apiVersion: v1
 kind: Service
 metadata:
-  name: note-app
+  name: note-app-service
 spec:
   selector:
-    app: note-app
+    app: note-app-pod
   ports:
     - protocol: TCP
       port: 80
@@ -141,9 +139,9 @@ spec:
       http:
         paths:
           - pathType: Prefix
-            path: "/"
+            path: /
             backend:
               service:
-                name: note-app
+                name: note-app-service
                 port:
                   number: 80
