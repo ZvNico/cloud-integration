@@ -136,7 +136,7 @@ metadata:
   name: note-app-ingress
 spec:
   rules:
-    - host: "34.49.160.154"
+    - host: *
       http:
         paths:
           - pathType: Prefix
