@@ -69,6 +69,7 @@ spec:
           volumeMounts:
             - name: note-db-volume
               mountPath: /var/lib/postgresql/data
+              subPath: note-db
   volumeClaimTemplates:
     - metadata:
         name: note-db-volume
