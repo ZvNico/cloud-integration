@@ -1,4 +1,4 @@
-name: Deploy Auth-Service to GKE
+name: Deploy Auth-Service to DigitalOcean Kubernetes
 
 on:
   workflow_run:
