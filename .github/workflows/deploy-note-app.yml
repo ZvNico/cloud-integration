@@ -1,4 +1,4 @@
-name: Deploy Note-App to GKE
+name: Deploy Note-App to DigitalOcean Kubernetes
 
 on:
   workflow_run:
@@ -14,24 +14,14 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Setup Google Cloud SDK
-        uses: google-github-actions/setup-gcloud@v0.2.1
+      - name: Install doctl
+        uses: digitalocean/action-doctl@v2
         with:
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          service_account_key: ${{ secrets.GCP_SA_KEY }}
-          export_default_credentials: true
+          token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
 
-      - name: Configure Docker
-        run: |
-          gcloud --quiet auth configure-docker
+      - name: Setup kubeconfig
+        run: doctl kubernetes cluster kubeconfig save cluster-1
 
-      - name: Get GKE credentials
-        uses: google-github-actions/get-gke-credentials@v0.3.0
-        with:
-          cluster_name: cluster-1
-          location: europe-west1
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-
-      - name: Deploy to GKE
+      - name: Deploy to DigitalOcean Kubernetes
         run: |
           kubectl apply -f k8s/note-app.yaml
