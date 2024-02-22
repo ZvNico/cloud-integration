@@ -2,7 +2,7 @@ name: Deploy Note-App to GKE
 
 on:
   workflow_run:
-    workflows: [ "Build and Push Auth-Service Docker Image" ]
+    workflows: [ "Build and Push Note-App Docker Image" ]
     types:
       - completed
 
