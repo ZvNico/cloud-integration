@@ -25,6 +25,10 @@ jobs:
         run: |
           gcloud --quiet auth configure-docker
 
+      - name: Set GKE Context
+        run: |
+          gcloud container clusters get-credentials cluster-1 --zone europe-west1 --project ${{ secrets.GCP_PROJECT_ID }}
+
       - name: Deploy to GKE
         run: |
           kubectl apply -f k8s/note-app.yaml
