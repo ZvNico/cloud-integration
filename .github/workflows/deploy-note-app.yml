@@ -24,4 +24,4 @@ jobs:
 
       - name: Deploy to DigitalOcean Kubernetes
         run: |
-          kubectl apply -f k8s/note-app.yaml
+          kubectl apply -f infra/k8s/note-app.yaml
