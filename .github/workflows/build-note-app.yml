@@ -14,8 +14,6 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        with:
-          path: note-app
 
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v1
@@ -34,6 +32,6 @@ jobs:
       - name: Build and push note-app image
         uses: docker/build-push-action@v2
         with:
-          context: .
+          context: ./note-app
           push: true
           tags: ghcr.io/${{ steps.repo.outputs.lowercase }}/note-app:latest

@@ -9,12 +9,9 @@ jobs:
   terraform:
     name: 'Terraform'
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-        with:
-          path: infra/terraform
 
       - name: Setup Terraform
         uses: hashicorp/setup-terraform@v1
@@ -23,14 +20,18 @@ jobs:
 
       - name: Terraform Init
         run: terraform init
+        working-directory: infra/terraform
 
       - name: Terraform Validate
         run: terraform validate
+        working-directory: infra/terraform
 
       - name: Terraform Plan
         run: terraform plan
+        working-directory: infra/terraform
 
       - name: Terraform Apply
         run: terraform apply -auto-approve
+        working-directory: infra/terraform
         env:
           TF_VAR_do_token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
