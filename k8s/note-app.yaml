@@ -135,6 +135,7 @@ kind: Ingress
 metadata:
   name: note-app-ingress
 spec:
+  ingressClassName: nginx
   rules:
     - host: zvnico.fr
       http:
