@@ -25,4 +25,4 @@ jobs:
 
       - name: Deploy to DigitalOcean Kubernetes
         run: |
-          kubectl apply -f infra/k8s/main.yml
+          kubectl apply -f infra/k8s/main.yaml
