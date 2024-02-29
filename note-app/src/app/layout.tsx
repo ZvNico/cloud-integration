@@ -15,11 +15,11 @@ export const metadata: Metadata = {
     description: "Web application to create and manage notes",
     icons: [
         {
-            url: '/favicon-light.svg',
+            url: '/note-app/favicon-light.svg',
             media: '(prefers-color-scheme: light)',
         },
         {
-            url: '/favicon-dark.svg',
+            url: '/note-app/favicon-dark.svg',
             media: '(prefers-color-scheme: dark)',
         },
     ]
