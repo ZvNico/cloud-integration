@@ -1,7 +1,7 @@
 # Note App
 
 Note App is a simple application that allows users to create, read, update, and delete notes. It is built with
-TypeScript, JavaScript, React, Prisma.
+TypeScript, JavaScript, Prisma, Next and React.
 
 ## Running the application with Docker and Docker Compose
 
