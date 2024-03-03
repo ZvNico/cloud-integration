@@ -1,7 +1,7 @@
-# Note App
+# Auth Service
 
-Note App is a simple application that allows users to create, read, update, and delete notes. It is built with
-TypeScript, JavaScript, React, Prisma.
+Auth Service is a service that provides authentication and authorization for the Note App. It is a GRPC server that
+handle register, login and token validation of users. It is built using Node.js and grpc.
 
 ## Running the application with Docker and Docker Compose
 
@@ -18,10 +18,10 @@ TypeScript, JavaScript, React, Prisma.
 git clone https://github.com/ZvNico/cloud-integration.git
 ```
 
-2. Move into the `note-app` directory:
+2. Move into the `auth-service` directory:
 
 ```bash
-cd cloud-integration/note-app
+cd cloud-integration/auth-service
 ```
 
 ### Running the application
@@ -48,7 +48,7 @@ git clone https://github.com/ZvNico/cloud-integration.git
 2. Move into the `note-app` directory:
 
 ```bash
-cd cloud-integration/note-app
+cd cloud-integration/auth-service
 ```
 
 3. Install the dependencies:

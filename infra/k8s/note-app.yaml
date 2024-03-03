@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: note-app-config
 data:
-  AUTH_SERVICE_URL: "auth-service:80"
+  AUTH_SERVICE_URL: "auth-service-service:80"
   PORT: "3000"
   DB_NAME: "note-db"
 
