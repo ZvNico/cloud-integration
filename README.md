@@ -1,6 +1,6 @@
 # Cloud Integration
 
-This project is a comprehensive demonstration of a microservices architecture deployed in a cloud environment. It is
+This project is a comprehensive demonstration of a very minimalistic microservices architecture deployed in a cloud environment. It is
 composed of two main services: `auth-service` and `note-app`.
 
 The SaaS is accessible at [http://zvnico.fr/note-app](http://zvnico.fr/note-app). It is hosted on a DigitalOcean
